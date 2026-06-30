@@ -1,0 +1,11 @@
+<mat-toolbar color="primary" class="app-toolbar">
+  <span class="app-title">ngx-view-morph</span>
+  <nav class="app-nav">
+    <a mat-button routerLink="/cards" routerLinkActive="active-link">Cards → detail</a>
+    <a mat-button routerLink="/list" routerLinkActive="active-link">List</a>
+  </nav>
+</mat-toolbar>
+
+<main class="app-content" tabindex="-1">
+  <router-outlet />
+</main>

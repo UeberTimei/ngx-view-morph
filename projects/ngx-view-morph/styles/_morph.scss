@@ -1,0 +1,108 @@
+// ngx-view-morph — default morph transition styles.
+//
+// Usage (consumer global styles, e.g. styles.scss):
+//   @use 'ngx-view-morph/styles/morph';
+//
+// All values are exposed as CSS custom properties so they can be overridden
+// without touching the library:
+//   :root { --morph-duration: 400ms; --morph-easing: ease; }
+
+:root {
+  --morph-duration: 300ms;
+  --morph-easing: cubic-bezier(0.2, 0, 0, 1);
+  --morph-radius: 16px;
+}
+
+::view-transition-group(*) {
+  animation-duration: var(--morph-duration);
+  animation-timing-function: var(--morph-easing);
+}
+
+::view-transition {
+  pointer-events: none;
+}
+
+:root.ngx-morph-running {
+  view-transition-name: none;
+}
+
+// --- Smooth shared-element morph --------------------------------------------
+
+::view-transition-old(.morph-cover),
+::view-transition-new(.morph-cover) {
+  animation-duration: var(--morph-duration);
+  animation-timing-function: var(--morph-easing);
+  height: 100%;
+  mix-blend-mode: normal;
+  object-fit: cover;
+  overflow: clip;
+  width: 100%;
+}
+
+// --- Group / list helper class (pairs with [morphClass]) ---------------------
+
+::view-transition-new(.morph-list-item):only-child {
+  animation: var(--morph-duration) var(--morph-easing) both morph-item-in;
+}
+::view-transition-old(.morph-list-item):only-child {
+  animation: var(--morph-duration) var(--morph-easing) both morph-item-out;
+}
+
+@keyframes morph-item-in {
+  from {
+    opacity: 0;
+    translate: 0 1rem;
+  }
+}
+@keyframes morph-item-out {
+  to {
+    opacity: 0;
+    translate: 0 1rem;
+  }
+}
+
+// --- Directional router transitions (pairs with provideMorphRouter) ----------
+
+:root[data-morph-direction='forward']::view-transition-old(root) {
+  animation-name: morph-slide-out-left;
+}
+:root[data-morph-direction='forward']::view-transition-new(root) {
+  animation-name: morph-slide-in-right;
+}
+:root[data-morph-direction='backward']::view-transition-old(root) {
+  animation-name: morph-slide-out-right;
+}
+:root[data-morph-direction='backward']::view-transition-new(root) {
+  animation-name: morph-slide-in-left;
+}
+
+@keyframes morph-slide-in-right {
+  from {
+    translate: 100% 0;
+  }
+}
+@keyframes morph-slide-out-left {
+  to {
+    translate: -100% 0;
+  }
+}
+@keyframes morph-slide-in-left {
+  from {
+    translate: -100% 0;
+  }
+}
+@keyframes morph-slide-out-right {
+  to {
+    translate: 100% 0;
+  }
+}
+
+// --- Accessibility: disable morph animations for users who prefer reduced motion
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

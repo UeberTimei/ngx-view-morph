@@ -1,0 +1,32 @@
+@if (selected(); as card) {
+<section class="detail">
+  <div
+    class="detail-hero"
+    [morph]="hero"
+    morphClass="morph-cover"
+    [style.background]="card.color"
+  ></div>
+  <h1 id="detail-heading" tabindex="-1" [morph]="heroTitle">{{ card.title }}</h1>
+  <p class="detail-body">{{ card.body }}</p>
+  <button mat-flat-button (click)="close()">← Back to list</button>
+</section>
+} @else {
+<h1>Card → details</h1>
+<p class="hint">Clicking a card morphs its image into the detail view via the View Transition API.</p>
+<div class="grid">
+  @for (card of cards; track card.id) {
+  <mat-card class="card" (click)="open(card)">
+    <div
+      class="card-swatch"
+      [id]="'card-' + card.id"
+      [morph]="morphingId() === card.id ? hero : null"
+      morphClass="morph-cover"
+      [style.background]="card.color"
+    ></div>
+    <mat-card-content>
+      <h2 [morph]="morphingId() === card.id ? heroTitle : null">{{ card.title }}</h2>
+    </mat-card-content>
+  </mat-card>
+  }
+</div>
+}

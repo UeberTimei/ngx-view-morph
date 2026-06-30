@@ -1,59 +1,89 @@
-# NgxViewMorph
+# ngx-view-morph
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.6.
+Shared-element morph transitions for Angular, built on the native [View Transition API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API). Works with any UI kit.
 
-## Development server
+Degrades gracefully when the browser lacks View Transition support or the user prefers reduced motion: the DOM mutation still runs, just without the animation.
 
-To start a local development server, run:
+## Requirements
 
-```bash
-ng serve
-```
+- Angular `^21.2.0` (peer dependency: `@angular/common`, `@angular/core`)
+- A browser that supports the View Transition API for the animated experience (others get an instant DOM update instead)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Install
 
 ```bash
-ng generate component component-name
+npm install ngx-view-morph
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Setup
 
-```bash
-ng generate --help
+Register the global config (optional — disables animations, e.g. for SSR or tests):
+
+```ts
+import { provideMorph } from 'ngx-view-morph';
+
+bootstrapApplication(App, {
+  providers: [provideMorph({ disabled: false })],
+});
 ```
 
-## Building
+For router-driven page transitions, add the router feature:
 
-To build the project run:
+```ts
+import { provideRouter } from '@angular/router';
+import { provideMorphRouter } from 'ngx-view-morph';
 
-```bash
-ng build
+provideRouter(routes, provideMorphRouter({ directionAware: true }));
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Usage
 
-## Running unit tests
+### Mark shared elements
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Add `[morph]` to any element that should participate in a transition. Give matching elements in the "before" and "after" states the same name.
 
-```bash
-ng test
+```html
+<mat-card [morph]="'card-' + id">…</mat-card>
 ```
 
-## Running end-to-end tests
+### Trigger a transition
 
-For end-to-end (e2e) testing, run:
+Wrap the DOM mutation (state change, navigation, list update) in `MorphService.run`:
 
-```bash
-ng e2e
+```ts
+import { MorphService } from 'ngx-view-morph';
+
+export class ProductListComponent {
+  private readonly morph = inject(MorphService);
+
+  openDetail(id: string): void {
+    this.morph.run(() => this.selectedId.set(id), { focusTarget: '#detail-heading' });
+  }
+}
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+`run` returns `{ status, finished }` — `status` is a signal (`'running' | 'skipped' | 'done'`), `finished` is a promise that resolves when the transition completes.
 
-## Additional Resources
+### Group transitions (lists)
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Give every item in a list the same `morphClass` so add/remove/reorder animations can be styled once via `::view-transition-group(.your-class)`:
+
+```html
+@for (item of items(); track item.id) {
+<div [morph]="'item-' + item.id" morphClass="list-item">…</div>
+}
+```
+
+## API
+
+| Export                                 | Purpose                                                                   |
+| -------------------------------------- | ------------------------------------------------------------------------- |
+| `MorphDirective` (`[morph]`)           | Assigns `view-transition-name` to the host element                        |
+| `MorphService.run(callback, options?)` | Runs a DOM mutation inside a view transition                              |
+| `provideMorph(config?)`                | Registers global config (`disabled`)                                      |
+| `provideMorphRouter(options?)`         | Enables view transitions on router navigation, optionally direction-aware |
+| `morphDirection(fromUrl, toUrl)`       | Derives `'forward' \| 'backward'` from URL depth                          |
+
+## Repository layout
+
+This is an Angular workspace containing the library (`projects/ngx-view-morph`) and a demo app (`projects/demo`) used for local development.

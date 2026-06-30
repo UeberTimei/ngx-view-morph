@@ -1,0 +1,29 @@
+.app-toolbar {
+  display: flex;
+  gap: 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.app-title {
+  font-weight: 600;
+}
+
+.app-nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.active-link {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.app-content {
+  display: block;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  outline: none;
+}
