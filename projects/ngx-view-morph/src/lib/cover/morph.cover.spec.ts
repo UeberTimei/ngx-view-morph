@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { vi } from 'vitest';
+import { vi } from 'vite-plus/test';
 
 import { MorphCoverAnimator } from './morph.cover';
 
