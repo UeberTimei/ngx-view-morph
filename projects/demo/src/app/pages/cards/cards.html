@@ -12,7 +12,9 @@
 </section>
 } @else {
 <h1>Card → details</h1>
-<p class="hint">Clicking a card morphs its image into the detail view via the View Transition API.</p>
+<p class="hint">
+  Clicking a card morphs its image into the detail view via the View Transition API.
+</p>
 <div class="grid">
   @for (card of cards; track card.id) {
   <mat-card class="card" (click)="open(card)">
