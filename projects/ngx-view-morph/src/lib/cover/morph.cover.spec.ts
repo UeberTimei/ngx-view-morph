@@ -43,7 +43,7 @@ describe('MorphCoverAnimator', () => {
   });
 
   it('animates the Cover group radius between the old and new captured states', async () => {
-    const originalAnimate = document.documentElement.animate;
+    const originalAnimate = Reflect.get(document.documentElement, 'animate');
     const animate = vi.fn(() => ({ cancel: vi.fn() }) as unknown as Animation);
     Object.defineProperty(document.documentElement, 'animate', {
       configurable: true,

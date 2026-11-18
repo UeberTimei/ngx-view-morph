@@ -25,7 +25,7 @@ export function provideMorphRouter(options: MorphRouterOptions = {}): ViewTransi
       const root = document.documentElement;
       root.dataset['morphDirection'] = direction;
 
-      transition.finished.finally(() => {
+      void transition.finished.finally(() => {
         delete root.dataset['morphDirection'];
       });
     },

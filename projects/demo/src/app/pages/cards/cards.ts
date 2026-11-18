@@ -56,6 +56,6 @@ export class CardsPage {
       focusTarget: id ? this.doc.getElementById(`card-${id}`) : null,
     });
     // Drop the shared name only after the morph-back completes.
-    transition.finished.finally(() => this.morphingId.set(null));
+    void transition.finished.finally(() => this.morphingId.set(null));
   }
 }

@@ -46,10 +46,14 @@ export class MorphCoverAnimator {
             if (this.runCoverAnimations(oldStyles, newStyles)) {
               return;
             }
-            fallbackStyle && (fallbackStyle.textContent = this.renderCoverStyles(newStyles));
+            if (fallbackStyle) {
+              fallbackStyle.textContent = this.renderCoverStyles(newStyles);
+            }
           })
           .catch(() => {
-            fallbackStyle && (fallbackStyle.textContent = this.renderCoverStyles(newStyles));
+            if (fallbackStyle) {
+              fallbackStyle.textContent = this.renderCoverStyles(newStyles);
+            }
           });
       },
       cleanup: () => {
@@ -198,7 +202,6 @@ export class MorphCoverAnimator {
     return MORPH_RADIUS_PROPERTIES.map((property) => `${property}: ${radii[property]};`).join(' ');
   }
 
-  private escapeCssIdent(value: string): string {
-    return value.replace(/[^a-zA-Z0-9_-]/g, (char) => `\\${char}`);
-  }
+  private readonly escapeCssIdent = (value: string): string =>
+    value.replace(/[^a-zA-Z0-9_-]/g, (char) => `\\${char}`);
 }
