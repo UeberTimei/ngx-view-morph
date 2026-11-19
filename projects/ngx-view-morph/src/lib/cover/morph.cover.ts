@@ -81,7 +81,9 @@ export class MorphCoverAnimator {
     }
     const styles: MorphCoverSnapshotStyle[] = [];
 
-    for (const element of Array.from(this.doc.querySelectorAll<HTMLElement>('*'))) {
+    // shortcut: only inline-styled Covers (what MorphDirective emits) are found; stylesheet-defined names are skipped.
+    const selector = `[style*="${MORPH_COVER_CLASS}"]`;
+    for (const element of Array.from(this.doc.querySelectorAll<HTMLElement>(selector))) {
       const transitionName =
         element.style.getPropertyValue('view-transition-name') ||
         win.getComputedStyle(element).getPropertyValue('view-transition-name');
