@@ -1,8 +1,7 @@
 <h1>List animation</h1>
 <p class="hint">
-  Each row carries a unique <code>view-transition-name</code> and a shared
-  <code>morphClass="morph-list-item"</code>. Adding, removing and shuffling are wrapped in
-  <code>MorphService.run</code>.
+  Two independent lists, same API. Add and Shuffle act on both; the ✕ button removes from its own
+  list only. Every change is wrapped in <code>MorphService.run</code>.
 </p>
 
 <div class="actions">
@@ -13,11 +12,15 @@
 <div class="columns">
   <section>
     <h2>Named</h2>
+    <p class="hint">
+      Each row has an explicit id: <code>[morph]="'item-' + id"</code> with
+      <code>morphClass="morph-list-item"</code>. Works in every browser with View Transitions.
+    </p>
     <ul class="list">
-      @for (item of items(); track item.id) {
+      @for (item of named(); track item.id) {
       <li class="row" [morph]="'item-' + item.id" morphClass="morph-list-item">
         <span>{{ item.label }}</span>
-        <button mat-icon-button aria-label="Remove" (click)="remove(item.id)">
+        <button mat-icon-button aria-label="Remove" (click)="remove(named, item.id)">
           <mat-icon>close</mat-icon>
         </button>
       </li>
@@ -26,12 +29,16 @@
   </section>
 
   <section>
-    <h2>Auto <small>(morph="auto", Chrome 137+)</small></h2>
+    <h2>Auto</h2>
+    <p class="hint">
+      No ids: <code>morph="auto"</code> lets the browser name each row
+      (<code>view-transition-name: match-element</code>, Chrome 137+).
+    </p>
     <ul class="list">
-      @for (item of items(); track item.id) {
+      @for (item of auto(); track item.id) {
       <li class="row" morph="auto">
         <span>{{ item.label }}</span>
-        <button mat-icon-button aria-label="Remove" (click)="remove(item.id)">
+        <button mat-icon-button aria-label="Remove" (click)="remove(auto, item.id)">
           <mat-icon>close</mat-icon>
         </button>
       </li>
