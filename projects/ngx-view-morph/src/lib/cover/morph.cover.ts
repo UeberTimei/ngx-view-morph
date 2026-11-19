@@ -81,21 +81,19 @@ export class MorphCoverAnimator {
     }
     const styles: MorphCoverSnapshotStyle[] = [];
 
-    // shortcut: only inline-styled Covers (what MorphDirective emits) are found; stylesheet-defined names are skipped.
-    const selector = `[style*="${MORPH_COVER_CLASS}"]`;
-    for (const element of Array.from(this.doc.querySelectorAll<HTMLElement>(selector))) {
-      const transitionName =
-        element.style.getPropertyValue('view-transition-name') ||
-        win.getComputedStyle(element).getPropertyValue('view-transition-name');
+    // shortcut: only finds covers marked via inline style (what MorphDirective sets), not via stylesheet; upgrade if CSS-only covers are needed.
+    const covers = this.doc.querySelectorAll<HTMLElement>(`[style*="${MORPH_COVER_CLASS}"]`);
+    for (const element of Array.from(covers)) {
+      const transitionName = element.style.getPropertyValue('view-transition-name');
       const hasTransitionName = transitionName && transitionName !== 'none';
       if (!hasTransitionName) {
         continue;
       }
 
-      const transitionClasses =
-        element.style.getPropertyValue('view-transition-class') ||
-        win.getComputedStyle(element).getPropertyValue('view-transition-class');
-      const isCoverElement = transitionClasses.split(/\s+/).includes(MORPH_COVER_CLASS);
+      const isCoverElement = element.style
+        .getPropertyValue('view-transition-class')
+        .split(/\s+/)
+        .includes(MORPH_COVER_CLASS);
       if (!isCoverElement) {
         continue;
       }
