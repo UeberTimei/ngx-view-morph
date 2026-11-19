@@ -1,3 +1,5 @@
+import { DOCUMENT } from '@angular/common';
+import { inject } from '@angular/core';
 import { ViewTransitionsFeature, withViewTransitions } from '@angular/router';
 
 import { morphDirection } from './morph.router.helpers';
@@ -22,7 +24,7 @@ export function provideMorphRouter(options: MorphRouterOptions = {}): ViewTransi
         return;
       }
       const direction = morphDirection(from.url.join('/'), to.url.join('/'));
-      const root = document.documentElement;
+      const root = inject(DOCUMENT).documentElement;
       root.dataset['morphDirection'] = direction;
 
       void transition.finished.finally(() => {
