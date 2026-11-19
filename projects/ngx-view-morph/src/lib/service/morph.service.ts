@@ -1,4 +1,5 @@
-import { ApplicationRef, DOCUMENT, Injectable, inject, signal } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { ApplicationRef, Injectable, inject, signal } from '@angular/core';
 
 import { MORPH_RUNNING_CLASS } from '../../constants';
 import { MorphCoverAnimator } from '../cover/morph.cover';

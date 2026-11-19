@@ -8,7 +8,8 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "paths": {
-      "ngx-view-morph": ["./projects/ngx-view-morph/src/public-api.ts"]
+      "ngx-view-morph": ["./projects/ngx-view-morph/src/public-api.ts"],
+      "ngx-view-morph/router": ["./projects/ngx-view-morph/router/public-api.ts"]
     },
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,

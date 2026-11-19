@@ -31,7 +31,7 @@ For router-driven page transitions, add the router feature:
 
 ```ts
 import { provideRouter } from '@angular/router';
-import { provideMorphRouter } from 'ngx-view-morph';
+import { provideMorphRouter } from 'ngx-view-morph/router';
 
 provideRouter(routes, provideMorphRouter({ directionAware: true }));
 ```

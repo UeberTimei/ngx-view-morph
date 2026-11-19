@@ -1,4 +1,5 @@
-import { DOCUMENT, Injectable, inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Injectable, inject } from '@angular/core';
 
 import {
   DEFAULT_MORPH_DURATION_MS,

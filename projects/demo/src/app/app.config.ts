@@ -1,6 +1,7 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideMorph, provideMorphRouter } from 'ngx-view-morph';
+import { provideMorph } from 'ngx-view-morph';
+import { provideMorphRouter } from 'ngx-view-morph/router';
 
 import { routes } from './app.routes';
 

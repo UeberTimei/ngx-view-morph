@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve demo",
+    "build": "ng build ngx-view-morph",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "ng test ngx-view-morph --no-watch && ng test demo --no-watch",
     "test:ui": "ng test --ui",
     "lint": "vp lint .",
     "format": "vp fmt .",
@@ -48,5 +48,5 @@
   "lint-staged": {
     "*.{ts,html,scss,json}": "vp check --fix"
   },
-  "packageManager": "npm@11.11.0"
+  "packageManager": "bun@1.4.2"
 }

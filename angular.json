@@ -27,7 +27,8 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/ngx-view-morph/tsconfig.spec.json"
+            "tsConfig": "projects/ngx-view-morph/tsconfig.spec.json",
+            "include": ["**/*.spec.ts", "../router/**/*.spec.ts"]
           }
         }
       }
