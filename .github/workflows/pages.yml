@@ -1,0 +1,43 @@
+name: Pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    env:
+      BASE: /${{ github.event.repository.name }}/
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bun run build
+      - run: bunx ng build demo --base-href ${{ env.BASE }}demo/
+      - run: bunx vitepress build docs
+        env:
+          DOCS_BASE: ${{ env.BASE }}
+          DEMO_URL: ${{ env.BASE }}demo/
+      - name: Assemble site
+        run: |
+          cp -r dist/demo/browser docs/.vitepress/dist/demo
+          # SPA fallback for deep links on Pages
+          cp docs/.vitepress/dist/demo/index.html docs/.vitepress/dist/demo/404.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/.vitepress/dist
+      - id: deploy
+        uses: actions/deploy-pages@v4

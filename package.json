@@ -1,7 +1,10 @@
 {
-  "name": "ngx-view-morph",
+  "name": "ngx-view-morph-workspace",
   "version": "0.0.0",
   "private": true,
+  "workspaces": [
+    "projects/ngx-view-morph"
+  ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve demo",
