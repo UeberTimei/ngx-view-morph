@@ -9,6 +9,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test ngx-view-morph --no-watch && ng test demo --no-watch",
     "test:ui": "ng test --ui",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
     "lint": "vp lint .",
     "format": "vp fmt .",
     "changeset": "changeset",
@@ -40,6 +43,7 @@
     "shiki": "^4.6.0",
     "typescript": "~5.9.2",
     "vite-plus": "1.3.0",
+    "vitepress": "^1.6.4",
     "vitest": "5.0.5"
   },
   "overrides": {

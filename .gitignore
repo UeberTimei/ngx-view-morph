@@ -43,3 +43,7 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 .vitest/
+
+# Docs
+docs/.vitepress/cache
+docs/.vitepress/dist
