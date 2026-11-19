@@ -232,4 +232,22 @@ describe('MorphService', () => {
     expect(ran).toBe(true);
     expect(transition.status()).toBe('skipped');
   });
+
+  it('skips the previous transition when a new one starts', () => {
+    let skipped = 0;
+    const service = setup(
+      fakeDocument({
+        startViewTransition: () => ({
+          ready: Promise.resolve(),
+          finished: new Promise<void>(() => undefined),
+          skipTransition: () => skipped++,
+        }),
+      }),
+    );
+
+    service.run(() => undefined);
+    service.run(() => undefined);
+
+    expect(skipped).toBe(1);
+  });
 });

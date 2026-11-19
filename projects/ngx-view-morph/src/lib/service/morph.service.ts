@@ -21,6 +21,7 @@ export class MorphService {
   private readonly config = inject(MORPH_CONFIG);
   private readonly appRef = inject(ApplicationRef);
   private readonly coverAnimator = inject(MorphCoverAnimator);
+  private active: ViewTransition | null = null;
 
   /**
    * Runs a DOM mutation as a morph transition, or applies it immediately when
@@ -45,6 +46,8 @@ export class MorphService {
       return { status, finished: Promise.resolve() };
     }
 
+    // Only one View Transition can run per document; finish the previous one first.
+    this.active?.skipTransition();
     this.doc.documentElement.classList.add(MORPH_RUNNING_CLASS);
     const cover = this.coverAnimator.begin();
 
@@ -53,11 +56,17 @@ export class MorphService {
       this.appRef.tick();
       cover.captureNew();
     });
+    this.active = transition;
 
     cover.animate(transition.ready);
 
     const finished = transition.finished.finally(() => {
       cover.cleanup();
+      if (this.active !== transition) {
+        status.set('done');
+        return;
+      }
+      this.active = null;
       this.doc.documentElement.classList.remove(MORPH_RUNNING_CLASS);
       this.routeFocus(options?.focusTarget);
       status.set('done');
