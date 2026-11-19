@@ -12,5 +12,7 @@ if npm view "$name@$version" version >/dev/null 2>&1; then
 fi
 
 bun run build
+# ng-packagr can't read assets outside the lib root, so copy the license by hand
+cp LICENSE README.md dist/ngx-view-morph/
 npm publish dist/ngx-view-morph --access public --provenance
 bunx changeset tag
