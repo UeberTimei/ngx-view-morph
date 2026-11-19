@@ -26,11 +26,12 @@ export class MorphService {
   /**
    * Runs a DOM mutation as a morph transition, or applies it immediately when
    * transitions are disabled, unsupported, or reduced motion is preferred.
-   * @param callback Mutates the DOM to the next state. Must be synchronous.
+   * @param callback Mutates the DOM to the next state. May return a promise (for example a
+   * fetch): the browser keeps showing the old state until it settles, then morphs to the new one.
    * @param options Optional focus target to restore after the transition.
    * @returns A handle exposing the transition status and a completion promise.
    */
-  run(callback: () => void, options?: MorphRunOptions): MorphTransition {
+  run(callback: () => void | Promise<void>, options?: MorphRunOptions): MorphTransition {
     const status = signal<MorphStatus>('running');
 
     const shouldSkipTransition =
@@ -39,11 +40,11 @@ export class MorphService {
       this.prefersReducedMotion();
 
     if (shouldSkipTransition) {
-      callback();
+      const result = callback();
       this.routeFocus(options?.focusTarget);
       status.set('skipped');
 
-      return { status, finished: Promise.resolve() };
+      return { status, finished: Promise.resolve(result) };
     }
 
     // Only one View Transition can run per document; finish the previous one first.
@@ -51,8 +52,8 @@ export class MorphService {
     this.doc.documentElement.classList.add(MORPH_RUNNING_CLASS);
     const cover = this.coverAnimator.begin();
 
-    const transition = this.doc.startViewTransition(() => {
-      callback();
+    const transition = this.doc.startViewTransition(async () => {
+      await callback();
       this.appRef.tick();
       cover.captureNew();
     });

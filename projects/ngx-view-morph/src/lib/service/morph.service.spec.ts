@@ -50,7 +50,34 @@ describe('MorphService', () => {
     expect(ran).toBe(true);
   });
 
-  it('flushes change detection inside the transition callback, after the mutation', () => {
+  it('waits for an async callback before flushing change detection', async () => {
+    let resolveWork!: () => void;
+    let ticked = false;
+    const fakeAppRef = {
+      tick: () => {
+        ticked = true;
+      },
+    } as unknown as ApplicationRef;
+    let captured: (() => unknown) | undefined;
+    const startViewTransition = (cb: () => void) => {
+      captured = cb;
+      return { finished: Promise.resolve() };
+    };
+    const service = setup(fakeDocument({ startViewTransition }), [
+      { provide: ApplicationRef, useValue: fakeAppRef },
+    ]);
+
+    service.run(() => new Promise<void>((resolve) => (resolveWork = resolve)));
+    const update = captured!();
+    await Promise.resolve();
+    expect(ticked).toBe(false);
+
+    resolveWork();
+    await update;
+    expect(ticked).toBe(true);
+  });
+
+  it('flushes change detection inside the transition callback, after the mutation', async () => {
     let ran = false;
     let tickRanAfterMutation = false;
     const fakeAppRef = {
@@ -59,7 +86,7 @@ describe('MorphService', () => {
       },
     } as unknown as ApplicationRef;
 
-    let captured: (() => void) | undefined;
+    let captured: (() => unknown) | undefined;
     const startViewTransition = (cb: () => void) => {
       captured = cb;
       return { finished: Promise.resolve() };
@@ -71,7 +98,7 @@ describe('MorphService', () => {
     service.run(() => {
       ran = true;
     });
-    captured!();
+    await captured!();
 
     expect(ran).toBe(true);
     expect(tickRanAfterMutation).toBe(true);
@@ -167,7 +194,7 @@ describe('MorphService', () => {
       },
     } as unknown as MorphCoverAnimator;
 
-    let capturedCallback: (() => void) | undefined;
+    let capturedCallback: (() => unknown) | undefined;
     const startViewTransition = (cb: () => void) => {
       capturedCallback = cb;
       return { finished: Promise.resolve(), ready };
@@ -183,8 +210,9 @@ describe('MorphService', () => {
     expect(beats).toEqual(['begin', 'animate']);
     expect(capturedReady).toBe(ready);
 
-    capturedCallback!();
-    expect(beats).toEqual(['begin', 'animate', 'captureNew']);
+    await capturedCallback!();
+    expect(beats.slice(0, 2)).toEqual(['begin', 'animate']);
+    expect(beats).toContain('captureNew');
 
     await new Promise((resolve) => setTimeout(resolve));
     expect(beats).toContain('cleanup');

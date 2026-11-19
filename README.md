@@ -79,7 +79,7 @@ Give every item in a list the same `morphClass` so add/remove/reorder animations
 | Export                                 | Purpose                                                                   |
 | -------------------------------------- | ------------------------------------------------------------------------- |
 | `MorphDirective` (`[morph]`)           | Assigns `view-transition-name` to the host element                        |
-| `MorphService.run(callback, options?)` | Runs a DOM mutation inside a view transition                              |
+| `MorphService.run(callback, options?)` | Runs a DOM mutation (sync or async) inside a view transition             |
 | `provideMorph(config?)`                | Registers global config (`disabled`)                                      |
 | `provideMorphRouter(options?)`         | Enables view transitions on router navigation, optionally direction-aware |
 | `morphDirection(fromUrl, toUrl)`       | Derives `'forward' \| 'backward'` from URL depth                          |
