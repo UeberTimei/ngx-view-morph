@@ -34,8 +34,11 @@ jobs:
       - name: Assemble site
         run: |
           cp -r dist/demo/browser docs/.vitepress/dist/demo
-          # SPA fallback for deep links on Pages
-          cp docs/.vitepress/dist/demo/index.html docs/.vitepress/dist/demo/404.html
+          # Pages only serves the root 404.html: send /demo/<route> deep links to /demo/?/<route>
+          # (restored by the script in the demo's index.html), other misses keep the docs 404 page.
+          redirect="<script>(function(l){var b='${BASE}demo/';if(l.pathname.indexOf(b)===0){l.replace(b+'?/'+l.pathname.slice(b.length)+(l.search?'\&'+l.search.slice(1):'')+l.hash)}})(location)</script>"
+          sed -i "s|</head>|${redirect}</head>|" docs/.vitepress/dist/404.html
+          grep -q "indexOf(b)===0" docs/.vitepress/dist/404.html
       - uses: actions/upload-pages-artifact@v3
         with:
           path: docs/.vitepress/dist
