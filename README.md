@@ -6,7 +6,7 @@ Degrades gracefully when the browser lacks View Transition support or the user p
 
 ## Requirements
 
-- Angular `^21.2.0` (peer dependency: `@angular/common`, `@angular/core`)
+- Angular 16 to 22 (peer dependencies: `@angular/common`, `@angular/core`; `@angular/router` 17+ is optional)
 - A browser that supports the View Transition API for the animated experience (others get an instant DOM update instead)
 
 ## Install
