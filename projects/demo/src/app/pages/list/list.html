@@ -10,13 +10,35 @@
   <button mat-stroked-button (click)="shuffle()">Shuffle</button>
 </div>
 
-<ul class="list">
-  @for (item of items(); track item.id) {
-  <li class="row" [morph]="'item-' + item.id" morphClass="morph-list-item">
-    <span>{{ item.label }}</span>
-    <button mat-icon-button aria-label="Remove" (click)="remove(item.id)">
-      <mat-icon>close</mat-icon>
-    </button>
-  </li>
-  }
-</ul>
+<div class="columns">
+  <section>
+    <h2>Named</h2>
+    <ul class="list">
+      @for (item of items(); track item.id) {
+      <li class="row" [morph]="'item-' + item.id" morphClass="morph-list-item">
+        <span>{{ item.label }}</span>
+        <button mat-icon-button aria-label="Remove" (click)="remove(item.id)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </li>
+      }
+    </ul>
+  </section>
+
+  <section>
+    <h2>Auto</h2>
+    <p class="hint">
+      <code>morph="auto"</code>: no ids, the browser names each row (Chrome 137+).
+    </p>
+    <ul class="list">
+      @for (item of items(); track item.id) {
+      <li class="row" morph="auto">
+        <span>{{ item.label }}</span>
+        <button mat-icon-button aria-label="Remove" (click)="remove(item.id)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </li>
+      }
+    </ul>
+  </section>
+</div>
