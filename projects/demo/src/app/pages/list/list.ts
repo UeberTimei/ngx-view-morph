@@ -2,6 +2,8 @@ import { Component, WritableSignal, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MorphDirective, MorphService } from 'ngx-view-morph';
+import { CodeBlock } from '../../code-block/code-block';
+import { LIST_AUTO_SNIPPET, LIST_NAMED_SNIPPET } from './list.snippets';
 
 interface Item {
   id: number;
@@ -17,7 +19,7 @@ const SEED: Item[] = [
 
 @Component({
   selector: 'demo-list',
-  imports: [MatButtonModule, MatIconModule, MorphDirective],
+  imports: [MatButtonModule, MatIconModule, MorphDirective, CodeBlock],
   templateUrl: './list.html',
   styleUrl: './list.scss',
 })
@@ -25,6 +27,8 @@ export class ListPage {
   private readonly morph = inject(MorphService);
   private nextId = SEED.length + 1;
 
+  protected readonly namedSnippet = LIST_NAMED_SNIPPET;
+  protected readonly autoSnippet = LIST_AUTO_SNIPPET;
   protected readonly named = signal<Item[]>([...SEED]);
   protected readonly auto = signal<Item[]>([...SEED]);
 

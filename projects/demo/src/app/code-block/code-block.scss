@@ -1,0 +1,32 @@
+.code-block {
+  margin: 12px 0;
+
+  summary {
+    cursor: pointer;
+    font-size: 14px;
+  }
+}
+
+.body {
+  position: relative;
+  margin-top: 8px;
+}
+
+.copy {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  color: #cbd5e1;
+}
+
+pre {
+  margin: 0;
+  padding: 16px 48px 16px 16px;
+  overflow-x: auto;
+  border-radius: 8px;
+  background: #0f172a;
+  color: #e2e8f0;
+  font-size: 13px;
+  line-height: 1.5;
+  user-select: text;
+}

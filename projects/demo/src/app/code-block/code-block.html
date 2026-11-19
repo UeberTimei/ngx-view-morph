@@ -1,0 +1,15 @@
+<details class="code-block">
+  <summary>{{ title() }}</summary>
+  <div class="body">
+    <button
+      mat-icon-button
+      class="copy"
+      type="button"
+      [attr.aria-label]="copied() ? 'Copied' : 'Copy code'"
+      (click)="copy()"
+    >
+      <mat-icon>{{ copied() ? 'check' : 'content_copy' }}</mat-icon>
+    </button>
+    <pre><code>{{ code() }}</code></pre>
+  </div>
+</details>
