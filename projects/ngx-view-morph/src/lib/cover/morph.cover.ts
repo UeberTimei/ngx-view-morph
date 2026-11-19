@@ -85,7 +85,9 @@ export class MorphCoverAnimator {
     const covers = this.doc.querySelectorAll<HTMLElement>(`[style*="${MORPH_COVER_CLASS}"]`);
     for (const element of Array.from(covers)) {
       const transitionName = element.style.getPropertyValue('view-transition-name');
-      const hasTransitionName = transitionName && transitionName !== 'none';
+      // match-element gets a browser-generated group name we can't target.
+      const hasTransitionName =
+        transitionName && transitionName !== 'none' && transitionName !== 'match-element';
       if (!hasTransitionName) {
         continue;
       }

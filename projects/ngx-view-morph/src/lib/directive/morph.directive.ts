@@ -18,13 +18,17 @@ export { MORPH_COVER_CLASS, MORPH_SCOPE_CLASS };
   selector: '[morph]',
   standalone: true,
   host: {
-    '[style.view-transition-name]': 'morph',
+    '[style.view-transition-name]': 'transitionName',
     '[style.view-transition-class]': 'viewTransitionClass',
     '[style.border-radius]': 'coverRadius',
   },
 })
 export class MorphDirective {
-  /** Unique transition name for this element in the current view state. */
+  /**
+   * Unique transition name for this element in the current view state. Pass
+   * `'auto'` to let the browser name it (`match-element`, Chrome 137+); browsers
+   * without support just skip the morph for that element.
+   */
   @Input() morph: string | null = null;
 
   /**
@@ -33,6 +37,10 @@ export class MorphDirective {
    * be defined once via `::view-transition-group(.<class>)`.
    */
   @Input() morphClass: string | null = null;
+
+  protected get transitionName(): string | null {
+    return this.morph === 'auto' ? 'match-element' : this.morph;
+  }
 
   /** Always includes {@link MORPH_SCOPE_CLASS}, plus any user-provided {@link morphClass}. */
   protected get viewTransitionClass(): string {

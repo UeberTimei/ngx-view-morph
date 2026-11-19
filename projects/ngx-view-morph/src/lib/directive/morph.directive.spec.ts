@@ -44,6 +44,14 @@ describe('MorphDirective', () => {
     expect(vtName(fixture)).toBe('hero');
   });
 
+  it("maps 'auto' to match-element where the browser supports it", () => {
+    fixture.componentInstance.name.set('auto');
+    fixture.detectChanges();
+
+    const supported = globalThis.CSS?.supports?.('view-transition-name', 'match-element') ?? true;
+    expect(vtName(fixture)).toBe(supported ? 'match-element' : '');
+  });
+
   it('clears the view-transition-name when the input is null', () => {
     fixture.detectChanges();
 
