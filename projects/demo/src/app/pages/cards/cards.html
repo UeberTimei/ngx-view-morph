@@ -13,7 +13,8 @@
 } @else {
 <h1>Card → details</h1>
 <p class="hint">
-  Clicking a card morphs its image into the detail view via the View Transition API.
+  Clicking a card morphs its image into the detail view via the View Transition API. Opening waits
+  500 ms first, like a fetch, to show that <code>morph.run</code> accepts an async callback.
 </p>
 <div class="grid">
   @for (card of cards; track card.id) {

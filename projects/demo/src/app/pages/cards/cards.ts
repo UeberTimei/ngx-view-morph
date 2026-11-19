@@ -46,7 +46,15 @@ export class CardsPage {
     this.appRef.tick();
     // 2) Switch to the detail view; the hero/title carry the same shared name,
     //    so the swatch morphs smoothly into the hero.
-    this.morph.run(() => this.selected.set(card), { focusTarget: '#detail-heading' });
+    // The callback is async: the old view stays on screen while the "request" runs,
+    // then the swatch morphs into the hero once the detail is ready.
+    this.morph.run(
+      async () => {
+        await new Promise((resolve) => setTimeout(resolve, 500)); // stands in for a fetch
+        this.selected.set(card);
+      },
+      { focusTarget: '#detail-heading' },
+    );
   }
 
   /** Returns to the card grid, morphing the hero back into the originating swatch. */
