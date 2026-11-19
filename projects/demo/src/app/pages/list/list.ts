@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MorphDirective, MorphService } from 'ngx-view-morph';
 import { CodeBlock } from '../../code-block/code-block';
-import { LIST_AUTO_SNIPPET, LIST_NAMED_SNIPPET } from './list.snippets';
+import { LIST_AUTO_SNIPPETS, LIST_NAMED_SNIPPETS } from './list.snippets';
 
 interface Item {
   id: number;
@@ -27,8 +27,8 @@ export class ListPage {
   private readonly morph = inject(MorphService);
   private nextId = SEED.length + 1;
 
-  protected readonly namedSnippet = LIST_NAMED_SNIPPET;
-  protected readonly autoSnippet = LIST_AUTO_SNIPPET;
+  protected readonly namedSnippets = LIST_NAMED_SNIPPETS;
+  protected readonly autoSnippets = LIST_AUTO_SNIPPETS;
   protected readonly named = signal<Item[]>([...SEED]);
   protected readonly auto = signal<Item[]>([...SEED]);
 

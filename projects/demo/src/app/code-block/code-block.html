@@ -1,15 +1,19 @@
 <details class="code-block">
   <summary>{{ title() }}</summary>
-  <div class="body">
+  <div class="code-block-body">
     <button
       mat-icon-button
-      class="copy"
+      class="code-block-copy"
       type="button"
       [attr.aria-label]="copied() ? 'Copied' : 'Copy code'"
       (click)="copy()"
     >
       <mat-icon>{{ copied() ? 'check' : 'content_copy' }}</mat-icon>
     </button>
-    <pre><code>{{ code() }}</code></pre>
+    @if (html.hasValue()) {
+    <div [innerHTML]="html.value()"></div>
+    } @else {
+    <pre class="shiki"><code>{{ code() }}</code></pre>
+    }
   </div>
 </details>

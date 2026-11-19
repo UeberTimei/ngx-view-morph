@@ -36,5 +36,6 @@
   </mat-card>
   }
 </div>
-<demo-code-block [code]="snippet" />
-}
+@for (s of snippets; track s.title) {
+<demo-code-block [title]="s.title" [lang]="s.lang" [code]="s.code" />
+} }

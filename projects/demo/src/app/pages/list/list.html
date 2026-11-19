@@ -26,14 +26,17 @@
       </li>
       }
     </ul>
-    <demo-code-block [code]="namedSnippet" />
+    @for (s of namedSnippets; track s.title) {
+    <demo-code-block [title]="s.title" [lang]="s.lang" [code]="s.code" />
+    }
   </section>
 
   <section>
     <h2>Auto</h2>
     <p class="hint">
-      No ids: <code>morph="auto"</code> lets the browser name each row
-      (<code>view-transition-name: match-element</code>, Chrome 137+).
+      No ids: <code>morph="auto"</code> lets the browser name each row (<code
+        >view-transition-name: match-element</code
+      >, Chrome 137+).
     </p>
     <ul class="list">
       @for (item of auto(); track item.id) {
@@ -45,6 +48,8 @@
       </li>
       }
     </ul>
-    <demo-code-block [code]="autoSnippet" />
+    @for (s of autoSnippets; track s.title) {
+    <demo-code-block [title]="s.title" [lang]="s.lang" [code]="s.code" />
+    }
   </section>
 </div>

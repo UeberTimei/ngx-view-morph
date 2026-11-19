@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MorphDirective, MorphService } from 'ngx-view-morph';
 import { CodeBlock } from '../../code-block/code-block';
-import { CARDS_SNIPPET } from './cards.snippets';
+import { CARDS_SNIPPETS } from './cards.snippets';
 
 interface DemoCard {
   id: number;
@@ -44,7 +44,7 @@ export class CardsPage {
   protected readonly hero = HERO;
   protected readonly heroTitle = HERO_TITLE;
   protected readonly cards = CARDS;
-  protected readonly snippet = CARDS_SNIPPET;
+  protected readonly snippets = CARDS_SNIPPETS;
   protected readonly selected = signal<DemoCard | null>(null);
   /** Id of the card that should carry the shared transition name right now. */
   protected readonly morphingId = signal<number | null>(null);

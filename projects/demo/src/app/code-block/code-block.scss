@@ -7,25 +7,26 @@
   }
 }
 
-.body {
+.code-block-body {
   position: relative;
   margin-top: 8px;
 }
 
-.copy {
+.code-block-copy {
   position: absolute;
   top: 4px;
   right: 4px;
+  z-index: 1;
   color: #cbd5e1;
 }
 
-pre {
+.code-block .shiki {
   margin: 0;
   padding: 16px 48px 16px 16px;
   overflow-x: auto;
   border-radius: 8px;
-  background: #0f172a;
-  color: #e2e8f0;
+  background: #24292e;
+  color: #e1e4e8;
   font-size: 13px;
   line-height: 1.5;
   user-select: text;
