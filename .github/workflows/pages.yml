@@ -30,7 +30,6 @@ jobs:
       - run: bunx vitepress build docs
         env:
           DOCS_BASE: ${{ env.BASE }}
-          DEMO_URL: ${{ env.BASE }}demo/
       - name: Assemble site
         run: |
           cp -r dist/demo/browser docs/.vitepress/dist/demo

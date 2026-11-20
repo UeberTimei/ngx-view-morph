@@ -11,7 +11,8 @@ export default defineConfig({
     nav: [
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'API', link: '/api/morph-service' },
-      { text: 'Demo', link: process.env['DEMO_URL'] ?? '/demo/' },
+      // _self: full page load, the demo is a separate app VitePress can't route to
+      { text: 'Demo', link: '/demo/', target: '_self' },
     ],
     sidebar: [
       {
