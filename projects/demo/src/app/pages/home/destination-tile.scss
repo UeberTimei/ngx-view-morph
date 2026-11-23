@@ -23,11 +23,6 @@ img {
   object-fit: cover;
   aspect-ratio: var(--ratio, 4 / 5);
   background: var(--paper-deep);
-  transition: transform 0.5s var(--morph-easing);
-}
-
-.open:hover img {
-  transform: scale(1.015);
 }
 
 .caption {
@@ -36,7 +31,7 @@ img {
   padding: 0.7rem 0.1rem 0;
 
   strong {
-    font: 400 1.35rem/1.1 var(--font-display);
+    font: 500 1.3rem/1.15 var(--font-display);
   }
 
   small {
@@ -52,10 +47,9 @@ img {
   height: 2.5rem;
   border: 0;
   border-radius: 50%;
-  background: rgb(255 255 255 / 85%);
+  background: rgb(255 255 255 / 92%);
   font-size: 1.2rem;
   line-height: 1;
-  backdrop-filter: blur(6px);
 
   &[aria-pressed='true'] {
     background: var(--accent);

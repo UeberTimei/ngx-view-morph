@@ -1,20 +1,20 @@
 @use '../../ngx-view-morph/styles/morph';
 
 :root {
-  --paper: #f3ede2;
-  --paper-deep: #e9e1d2;
-  --ink: #1c1915;
-  --ink-soft: #655d51;
-  --line: rgb(28 25 21 / 14%);
-  --accent: #c4532f;
-  --accent-ink: #fff8ef;
+  --paper: #eef1e6;
+  --paper-deep: #dfe5d2;
+  --ink: #16201a;
+  --ink-soft: #55635a;
+  --line: rgb(22 32 26 / 14%);
+  --accent: #2f6b4a;
+  --accent-ink: #f3faf0;
 
-  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
-  --font-ui: 'Instrument Sans', system-ui, sans-serif;
+  --font-display: 'Schibsted Grotesk', system-ui, sans-serif;
+  --font-ui: 'Schibsted Grotesk', system-ui, sans-serif;
 
   --page-pad: clamp(1.25rem, 4vw, 3rem);
 
-  --morph-duration: 520ms;
+  --morph-duration: 420ms;
   --morph-easing: cubic-bezier(0.32, 0.72, 0, 1);
   --morph-radius: 20px;
 }
@@ -44,8 +44,8 @@ h3 {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1.02;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
 }
 
 a {

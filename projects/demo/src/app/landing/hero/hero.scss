@@ -13,13 +13,8 @@
 }
 
 h1 {
-  font-size: clamp(2.6rem, 7.5vw, 6rem);
-  font-weight: 300;
-
-  em {
-    font-style: italic;
-    font-weight: 400;
-  }
+  font-size: clamp(2.6rem, 7vw, 5.5rem);
+  font-weight: 500;
 }
 
 .lede {
@@ -31,38 +26,8 @@ h1 {
 
 .actions {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.8rem 1.4rem;
-  margin-top: 2rem;
-}
-
-.install {
-  display: inline-flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.7rem 0.7rem 0.7rem 1.2rem;
-  border: 0;
-  border-radius: 999px;
-  background: var(--ink);
-  color: var(--paper);
-
-  code {
-    font:
-      500 0.95rem ui-monospace,
-      'SF Mono',
-      Menlo,
-      monospace;
-  }
-
-  span {
-    padding: 0.3rem 0.8rem;
-    border-radius: 999px;
-    background: var(--accent);
-    color: var(--accent-ink);
-    font-size: 0.8rem;
-    font-weight: 600;
-  }
+  gap: 1.6rem;
+  margin-top: 1.8rem;
 }
 
 .link {

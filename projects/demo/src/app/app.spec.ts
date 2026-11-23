@@ -11,11 +11,11 @@ describe('App', () => {
     }).compileComponents();
   });
 
-  it('shows the Wayfarer brand and the empty saved tray', async () => {
+  it('shows the Wayfarer brand and no tray text while nothing is saved', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     const el = fixture.nativeElement as HTMLElement;
     expect(el.querySelector('.brand')?.textContent).toContain('Wayfarer');
-    expect(el.querySelector('.empty')?.textContent).toContain('Nothing saved yet');
+    expect(el.querySelector('.tray')?.textContent?.trim()).toBe('');
   });
 });

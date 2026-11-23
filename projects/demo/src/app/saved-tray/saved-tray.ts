@@ -12,13 +12,12 @@ import { WayfarerStore } from '../state/wayfarer.store';
       @for (d of items(); track d.slug) {
         <img
           class="thumb"
+          decoding="async"
           [src]="d.photo"
           [alt]="d.title + ' saved'"
           [morph]="store.flyingSlug() === d.slug ? 'saved-' + d.slug : null"
           morphClass="morph-cover"
         />
-      } @empty {
-        <span class="empty">Nothing saved yet</span>
       }
     </div>
   `,
@@ -39,10 +38,6 @@ import { WayfarerStore } from '../state/wayfarer.store';
     }
     .thumb:first-child {
       margin-left: 0;
-    }
-    .empty {
-      font-size: 0.85rem;
-      color: var(--ink-soft);
     }
   `,
 })
