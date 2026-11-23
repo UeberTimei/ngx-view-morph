@@ -11,12 +11,14 @@ import { WayfarerStore } from '../../state/wayfarer.store';
   template: `
     <article class="tile" [morph]="tileName()" morphClass="morph-list-item">
       <button class="open" type="button" (click)="opened.emit(destination())">
-        <img
-          [src]="destination().photo"
-          [alt]="destination().title + ', ' + destination().place"
-          [morph]="photoName()"
-          morphClass="morph-cover"
-        />
+        <span class="frame">
+          <img
+            [src]="destination().photo"
+            [alt]="destination().title + ', ' + destination().place"
+            [morph]="photoName()"
+            morphClass="morph-cover"
+          />
+        </span>
         <span class="caption">
           <strong>{{ destination().title }}</strong>
           <small>{{ destination().place }}</small>

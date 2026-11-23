@@ -9,6 +9,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideMorph(),
-    provideRouter(routes, provideMorphRouter({ directionAware: true })),
+    provideRouter(routes, provideMorphRouter({ directionAware: false })),
   ],
 };
