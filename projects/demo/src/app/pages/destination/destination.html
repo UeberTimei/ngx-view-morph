@@ -1,0 +1,20 @@
+@if (destination; as d) {
+<article class="page">
+  <button class="back" type="button" (click)="back()">← All destinations</button>
+  <img
+    class="hero"
+    [src]="d.photo"
+    [alt]="d.title + ', ' + d.place"
+    [morph]="'dest-' + d.slug"
+    morphClass="morph-cover"
+  />
+  <div class="text">
+    <p class="place">{{ d.place }}</p>
+    <h1>{{ d.title }}</h1>
+    <p class="blurb">{{ d.blurb }}</p>
+    @for (p of d.body; track p) {
+    <p class="body">{{ p }}</p>
+    }
+  </div>
+</article>
+}

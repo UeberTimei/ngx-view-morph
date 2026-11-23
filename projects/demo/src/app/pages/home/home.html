@@ -1,0 +1,20 @@
+<demo-hero />
+
+<nav class="chips" aria-label="Filter destinations">
+  @for (c of categories; track c.id) {
+  <button
+    type="button"
+    class="chip"
+    [attr.aria-pressed]="store.category() === c.id"
+    (click)="selectCategory(c.id)"
+  >
+    {{ c.label }}
+  </button>
+  }
+</nav>
+
+<section class="grid" aria-label="Destinations">
+  @for (d of store.visible(); track d.slug) {
+  <demo-destination-tile [destination]="d" (opened)="open($event)" (toggled)="toggleSave($event)" />
+  }
+</section>

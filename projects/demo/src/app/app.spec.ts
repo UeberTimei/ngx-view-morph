@@ -11,15 +11,11 @@ describe('App', () => {
     }).compileComponents();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(App);
-    expect(fixture.componentInstance).toBeTruthy();
-  });
-
-  it('should render the library name in the toolbar', async () => {
+  it('shows the Wayfarer brand and the empty saved tray', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.app-title')?.textContent).toContain('ngx-view-morph');
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelector('.brand')?.textContent).toContain('Wayfarer');
+    expect(el.querySelector('.empty')?.textContent).toContain('Nothing saved yet');
   });
 });

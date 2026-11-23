@@ -1,0 +1,34 @@
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0 var(--page-pad) 1.5rem;
+}
+
+.chip {
+  padding: 0.5rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: none;
+  font-weight: 500;
+
+  &[aria-pressed='true'] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+}
+
+.grid {
+  columns: 3 17rem;
+  column-gap: 1.1rem;
+  padding: 0 var(--page-pad) 4rem;
+}
+
+demo-destination-tile:nth-child(3n + 2) {
+  --ratio: 1 / 1;
+}
+
+demo-destination-tile:nth-child(3n) {
+  --ratio: 4 / 3;
+}

@@ -1,25 +1,70 @@
-@use '@angular/material' as mat;
 @use '../../ngx-view-morph/styles/morph';
+
+:root {
+  --paper: #f3ede2;
+  --paper-deep: #e9e1d2;
+  --ink: #1c1915;
+  --ink-soft: #655d51;
+  --line: rgb(28 25 21 / 14%);
+  --accent: #c4532f;
+  --accent-ink: #fff8ef;
+
+  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-ui: 'Instrument Sans', system-ui, sans-serif;
+
+  --page-pad: clamp(1.25rem, 4vw, 3rem);
+
+  --morph-duration: 520ms;
+  --morph-easing: cubic-bezier(0.32, 0.72, 0, 1);
+  --morph-radius: 20px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 html {
   height: 100%;
-  @include mat.theme(
-    (
-      color: (
-        primary: mat.$azure-palette,
-        tertiary: mat.$blue-palette,
-      ),
-      typography: Roboto,
-      density: 0,
-    )
-  );
 }
 
 body {
-  color-scheme: light;
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
   margin: 0;
-  height: 100%;
+  min-height: 100%;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1rem/1.55 var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --morph-duration: 1ms;
+  }
 }

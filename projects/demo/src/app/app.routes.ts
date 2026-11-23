@@ -1,15 +1,15 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'cards' },
   {
-    path: 'cards',
-    title: 'Cards → detail',
-    loadComponent: () => import('./pages/cards/cards').then((m) => m.CardsPage),
+    path: '',
+    pathMatch: 'full',
+    title: 'Wayfarer',
+    loadComponent: () => import('./pages/home/home').then((m) => m.HomePage),
   },
   {
-    path: 'list',
-    title: 'List transitions',
-    loadComponent: () => import('./pages/list/list').then((m) => m.ListPage),
+    path: 'd/:slug',
+    loadComponent: () => import('./pages/destination/destination').then((m) => m.DestinationPage),
   },
+  { path: '**', redirectTo: '' },
 ];
