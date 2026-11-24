@@ -8,6 +8,9 @@ import { ViewTransitionInfo } from '@angular/router';
  * this animates a clip-path on the transition group from the old frame to the new one.
  */
 export function animateCoverWindows({ transition }: ViewTransitionInfo): void {
+  // A backdrop-filter on a named element leaks its glass over the whole transition layer.
+  document.documentElement.classList.add('vt-active');
+  void transition.finished.finally(() => document.documentElement.classList.remove('vt-active'));
   const before = measureWindows();
   void transition.ready.then(() => {
     const after = measureWindows();

@@ -125,6 +125,12 @@ h1 {
   font-size: 1.2rem;
 }
 
+// Drops the glass while a view transition snapshots the button (see morph-window.ts).
+:root.vt-active .back {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
 @keyframes fade {
   from {
     opacity: 0;
