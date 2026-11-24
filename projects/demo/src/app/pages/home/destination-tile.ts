@@ -17,7 +17,7 @@ import { WayfarerStore } from '../../state/wayfarer.store';
             [alt]="destination().title + ', ' + destination().place"
             [style.--photo-ratio]="destination().ratio"
             [morph]="routeName()"
-            morphClass="morph-cover"
+            morphClass="route-photo"
           />
         </span>
         <span class="caption">

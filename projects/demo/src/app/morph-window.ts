@@ -57,7 +57,7 @@ interface Window {
 /** Maps each named cover photo to the clip-path of its frame, relative to the photo's own box. */
 function measureWindows(): Map<string, Window> {
   const windows = new Map<string, Window>();
-  for (const img of document.querySelectorAll<HTMLElement>('img[style*="morph-cover"]')) {
+  for (const img of document.querySelectorAll<HTMLElement>('img[style*="route-photo"]')) {
     const name = img.style.getPropertyValue('view-transition-name');
     const frame = img.parentElement;
     if (!name || name === 'none' || !frame) continue;
