@@ -5,6 +5,7 @@
       class="hero"
       [src]="d.photo"
       [alt]="d.title + ', ' + d.place"
+      [style.--photo-ratio]="d.ratio"
       [morph]="'dest-' + d.slug"
       morphClass="morph-cover"
     />

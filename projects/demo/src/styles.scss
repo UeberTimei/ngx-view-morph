@@ -73,16 +73,6 @@ button {
   animation: vt-fade-in 450ms ease-in-out both;
 }
 
-// Both photo snapshots are different crops of one picture. Crossfading them from the start shows
-// two images; instead keep the old one solid and let the new one fade in over the last part.
-::view-transition-old(.morph-cover) {
-  animation: none;
-}
-::view-transition-new(.morph-cover) {
-  animation: vt-fade-in calc(var(--morph-duration) * 0.45) ease-in-out
-    calc(var(--morph-duration) * 0.45) both;
-}
-
 @keyframes vt-fade-out {
   to {
     opacity: 0;

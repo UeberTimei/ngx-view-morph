@@ -17,20 +17,30 @@
 
 // The frame owns the clipping and rounding; only the image inside scales, so Safari can't cut the corners.
 .frame {
+  position: relative;
   display: block;
   overflow: hidden;
+  aspect-ratio: var(--ratio, 4 / 5);
+  background: var(--paper-deep);
   border-radius: var(--morph-radius);
   isolation: isolate;
+  container-type: size;
   transform: translateZ(0);
 }
 
+// The image keeps its natural aspect and is only sized to cover the frame, so the route morph
+// can animate the whole photo and clip it to the frame (see morph-window.ts).
 img {
-  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  // Cover sizing without cropping: the smallest box of the photo's ratio that fills the frame.
+  width: max(100cqw, 100cqh * var(--photo-ratio));
+  height: auto;
+  aspect-ratio: var(--photo-ratio);
+  max-width: none;
   transition: transform 0.6s var(--morph-easing);
-  width: 100%;
-  object-fit: cover;
-  aspect-ratio: var(--ratio, 4 / 5);
-  background: var(--paper-deep);
 }
 
 .open:hover img {

@@ -4,15 +4,23 @@
 
 .stage {
   position: relative;
+  overflow: hidden;
+  container-type: size;
+  height: clamp(24rem, 78vh, 46rem);
   margin: 0;
   color: #fff;
 }
 
+// Natural aspect, sized to cover the stage: same shape as the tile photo (see morph-window.ts).
 .hero {
-  display: block;
-  width: 100%;
-  height: clamp(24rem, 78vh, 46rem);
-  object-fit: cover;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: max(100cqw, 100cqh * var(--photo-ratio));
+  height: auto;
+  aspect-ratio: var(--photo-ratio);
+  max-width: none;
   --morph-radius: 0;
 }
 

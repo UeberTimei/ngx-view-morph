@@ -11,11 +11,12 @@ import { WayfarerStore } from '../../state/wayfarer.store';
   template: `
     <article class="tile" [morph]="tileName()" morphClass="morph-list-item">
       <button class="open" type="button" (click)="opened.emit(destination())">
-        <span class="frame">
+        <span class="frame" [morph]="flyName()" morphClass="morph-cover">
           <img
             [src]="destination().photo"
             [alt]="destination().title + ', ' + destination().place"
-            [morph]="photoName()"
+            [style.--photo-ratio]="destination().ratio"
+            [morph]="routeName()"
             morphClass="morph-cover"
           />
         </span>
@@ -48,9 +49,13 @@ export class DestinationTile {
   protected readonly tileName = computed(() =>
     this.store.reflowing() ? 'tile-' + this.destination().slug : null,
   );
-  protected readonly photoName = computed(() => {
+  // The route morph names the whole uncropped photo (see morph-window.ts); the save flight names the cropped frame.
+  protected readonly routeName = computed(() => {
     const slug = this.destination().slug;
-    if (this.store.activeSlug() === slug) return 'dest-' + slug;
+    return this.store.activeSlug() === slug ? 'dest-' + slug : null;
+  });
+  protected readonly flyName = computed(() => {
+    const slug = this.destination().slug;
     return this.store.flyingSlug() === slug ? 'saved-' + slug : null;
   });
 }
