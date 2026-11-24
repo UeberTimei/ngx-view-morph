@@ -65,11 +65,22 @@ button {
 
 // Page chrome (scrim, title, button) fades out quickly on route changes, so the photo morph
 // reads as the only moving thing instead of the chrome vanishing with the photo's easing.
+// Symmetric timing keeps the two opacities summing to 1, so the page never dips to the canvas colour.
 ::view-transition-old(root) {
-  animation: vt-fade-out 240ms ease-out both;
+  animation: vt-fade-out 450ms ease-in-out both;
 }
 ::view-transition-new(root) {
-  animation: vt-fade-in 320ms ease-in-out 140ms both;
+  animation: vt-fade-in 450ms ease-in-out both;
+}
+
+// Both photo snapshots are different crops of one picture. Crossfading them from the start shows
+// two images; instead keep the old one solid and let the new one fade in over the last part.
+::view-transition-old(.morph-cover) {
+  animation: none;
+}
+::view-transition-new(.morph-cover) {
+  animation: vt-fade-in calc(var(--morph-duration) * 0.45) ease-in-out
+    calc(var(--morph-duration) * 0.45) both;
 }
 
 @keyframes vt-fade-out {
