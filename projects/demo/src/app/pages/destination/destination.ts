@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MorphDirective } from 'ngx-view-morph';
 
@@ -26,8 +26,13 @@ export class DestinationPage implements OnDestroy {
     else window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
+  protected readonly leaving = signal(false);
+
   protected back(): void {
-    void this.router.navigateByUrl('/');
+    // Let the overlays fade out before the morph starts (0.3s, matches `.leaving` in the scss).
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.leaving.set(true);
+    setTimeout(() => void this.router.navigateByUrl('/'), reduced ? 0 : 300);
   }
 
   ngOnDestroy(): void {

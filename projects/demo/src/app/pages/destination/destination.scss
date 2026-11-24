@@ -140,6 +140,22 @@ h1 {
   }
 }
 
+// Leaving: the overlays fade out first, then back() starts the morph.
+.leaving {
+  .text,
+  .caption,
+  .back,
+  .hero::after {
+    animation: fade-out 0.3s ease both;
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
 @keyframes rise {
   from {
     opacity: 0;
@@ -151,8 +167,7 @@ h1 {
   .text,
   .caption,
   .back,
-  .stage::after {
-  display: none; // TEMP: scrim off while debugging the double image
+  .hero::after {
     animation: none;
   }
 }

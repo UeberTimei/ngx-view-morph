@@ -1,5 +1,5 @@
 @if (destination; as d) {
-<article class="page">
+<article class="page" [class.leaving]="leaving()">
   <figure class="stage">
     <div class="hero" [morph]="'dest-' + d.slug" morphClass="morph-cover" morphWindow [style.--photo-ratio]="d.ratio">
       <img [src]="d.photo" [alt]="d.title + ', ' + d.place" />
