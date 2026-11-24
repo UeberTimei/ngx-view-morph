@@ -73,6 +73,19 @@ button {
   animation: vt-fade-in 450ms ease-in-out both;
 }
 
+// The destination chrome has its own names so it paints above the morphing photo (the root
+// snapshot sits underneath it) and fades out first; on entry the page's own CSS fade-in runs.
+::view-transition-old(dest-scrim),
+::view-transition-old(dest-back),
+::view-transition-old(dest-caption) {
+  animation: vt-fade-out 300ms ease-out both;
+}
+::view-transition-new(dest-scrim),
+::view-transition-new(dest-back),
+::view-transition-new(dest-caption) {
+  animation: none;
+}
+
 @keyframes vt-fade-out {
   to {
     opacity: 0;
@@ -86,7 +99,10 @@ button {
 
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root),
-  ::view-transition-new(root) {
+  ::view-transition-new(root),
+  ::view-transition-old(dest-scrim),
+  ::view-transition-old(dest-back),
+  ::view-transition-old(dest-caption) {
     animation: none;
   }
 
