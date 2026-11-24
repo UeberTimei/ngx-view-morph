@@ -12,17 +12,10 @@ export function animateCoverWindows({ transition }: ViewTransitionInfo): void {
   document.documentElement.classList.add('vt-active');
   void transition.finished.finally(() => document.documentElement.classList.remove('vt-active'));
   const before = measureWindows();
-  // Static rules apply from the very first frame: a clip set only at `ready` leaves the full
-  // photo box visible until then. A crossfade of two snapshots of one photo shows both mid-flight
-  // when their aspect differs (tall photos), so only the full-width (hero) snapshot is shown.
+  // A clip set only at `ready` leaves the full photo box visible until then, so it applies from the first frame.
   const rules = document.createElement('style');
   for (const [name, from] of before) {
-    const id = CSS.escape(name);
-    const [keep, drop] = from.hero ? ['old', 'new'] : ['new', 'old'];
-    rules.textContent +=
-      `::view-transition-group(${id}) { clip-path: ${from.clip}; }` +
-      `::view-transition-${keep}(${id}) { animation: none !important; opacity: 1; }` +
-      `::view-transition-${drop}(${id}) { animation: none !important; opacity: 0; }`;
+    rules.textContent += `::view-transition-group(${CSS.escape(name)}) { clip-path: ${from.clip}; }`;
   }
   document.head.append(rules);
   void transition.finished.finally(() => rules.remove());
@@ -51,13 +44,12 @@ export function animateCoverWindows({ transition }: ViewTransitionInfo): void {
 
 interface Window {
   clip: string;
-  hero: boolean;
 }
 
 /** Maps each named cover photo to the clip-path of its frame, relative to the photo's own box. */
 function measureWindows(): Map<string, Window> {
   const windows = new Map<string, Window>();
-  for (const img of document.querySelectorAll<HTMLElement>('img[style*="morph-cover"]')) {
+  for (const img of document.querySelectorAll<HTMLElement>('[style*="morph-cover"][style*="--photo-ratio"]')) {
     const name = img.style.getPropertyValue('view-transition-name');
     const frame = img.parentElement;
     if (!name || name === 'none' || !frame) continue;
@@ -73,7 +65,7 @@ function measureWindows(): Map<string, Window> {
       .map((fraction) => `${Math.max(0, fraction * 100)}%`)
       .join(' ');
     const radius = getComputedStyle(frame).borderTopLeftRadius;
-    windows.set(name, { clip: `inset(${inset} round ${radius})`, hero: photo.width >= window.innerWidth * 0.9 });
+    windows.set(name, { clip: `inset(${inset} round ${radius})` });
   }
   return windows;
 }

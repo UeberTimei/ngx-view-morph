@@ -1,14 +1,9 @@
 @if (destination; as d) {
 <article class="page">
   <figure class="stage">
-    <img
-      class="hero"
-      [src]="d.photo"
-      [alt]="d.title + ', ' + d.place"
-      [style.--photo-ratio]="d.ratio"
-      [morph]="'dest-' + d.slug"
-      morphClass="morph-cover"
-    />
+    <div class="hero" [morph]="'dest-' + d.slug" morphClass="morph-cover" [style.--photo-ratio]="d.ratio">
+      <img [src]="d.photo" [alt]="d.title + ', ' + d.place" />
+    </div>
     <button class="back" type="button" (click)="back()">
       ← All destinations
     </button>

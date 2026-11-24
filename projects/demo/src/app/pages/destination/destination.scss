@@ -12,29 +12,38 @@
 }
 
 // Natural aspect, sized to cover the stage: same shape as the tile photo (see morph-window.ts).
+// The scrim lives inside the morphing element, so it travels with the photo instead of
+// sitting on the stage as a second rectangle.
 .hero {
   position: absolute;
   top: 50%;
   left: 50%;
   translate: -50% -50%;
   width: max(100cqw, 100cqh * var(--photo-ratio));
-  height: auto;
   aspect-ratio: var(--photo-ratio);
-  max-width: none;
   --morph-radius: 0;
-}
 
-// Scrim keeps the overlaid text readable on any photo.
-.stage::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgb(0 0 0 / 38%), transparent 28%),
-    linear-gradient(to top, rgb(0 0 0 / 62%), transparent 55%);
-  pointer-events: none;
-  view-transition-name: dest-scrim;
-  // The morphing photo covers the page until it lands, so fade the scrim in after it.
-  animation: fade 0.45s ease 0.3s both;
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  // Stage-sized and centred on the photo, so it covers exactly the visible window.
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: 100cqw;
+    height: 100cqh;
+    background: linear-gradient(to bottom, rgb(0 0 0 / 38%), transparent 28%),
+      linear-gradient(to top, rgb(0 0 0 / 62%), transparent 55%);
+    pointer-events: none;
+    // Starts once the morph has landed, so the photo travels clean.
+    animation: fade 0.45s ease calc(var(--morph-duration) + 50ms) both;
+  }
 }
 
 .back {
@@ -143,6 +152,7 @@ h1 {
   .caption,
   .back,
   .stage::after {
+  display: none; // TEMP: scrim off while debugging the double image
     animation: none;
   }
 }
