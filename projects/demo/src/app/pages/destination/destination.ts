@@ -36,7 +36,7 @@ export class DestinationPage implements OnDestroy {
   fadeOut(): Promise<boolean> | true {
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
     this.leaving.set(true);
-    return new Promise((resolve) => setTimeout(() => resolve(true), 100));
+    return new Promise((resolve) => setTimeout(() => resolve(true), 60));
   }
 
   ngOnDestroy(): void {
