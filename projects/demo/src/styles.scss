@@ -86,6 +86,13 @@ button {
   animation: none;
 }
 
+// Drops the glass while a view transition snapshots the back button (see morph-window.ts).
+// Global on purpose: Angular's view encapsulation would scope the `:root` part and never match.
+.vt-active .back {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
 @keyframes vt-fade-out {
   to {
     opacity: 0;
