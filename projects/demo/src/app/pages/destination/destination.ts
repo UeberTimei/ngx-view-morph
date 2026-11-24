@@ -21,6 +21,8 @@ export class DestinationPage implements OnDestroy {
   constructor() {
     // Deep link to an unknown slug: nothing to show, go home.
     if (!this.destination) void this.router.navigateByUrl('/', { replaceUrl: true });
+    // Opened from anywhere on the home page: glide up to the hero.
+    else window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   protected back(): void {
