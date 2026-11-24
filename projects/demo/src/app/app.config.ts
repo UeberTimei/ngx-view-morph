@@ -3,7 +3,7 @@ import {
   provideAppInitializer,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
 import { provideMorph } from 'ngx-view-morph';
 import { provideMorphRouter } from 'ngx-view-morph/router';
 
@@ -19,6 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideMorph(),
     provideRouter(
       routes,
+      withPreloading(PreloadAllModules), // no lazy-chunk wait between the fade and the morph
       provideMorphRouter({
         // A backdrop-filter on a named element leaks its glass over the whole transition layer.
         onTransition: (transition) => {
