@@ -91,6 +91,20 @@ html.vt-active .back {
   backdrop-filter: none;
 }
 
+// WebKit (the property below exists only there) is the slow path for view transitions: it
+// re-rasterises backdrop-filter and cross-fades full-page snapshots every frame. Keep the
+// tinted button without the blur, and make the page swap near-instant under the photo morph.
+@supports (hanging-punctuation: first) {
+  html .back {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 120ms;
+  }
+}
+
 @keyframes vt-fade-out {
   to {
     opacity: 0;
