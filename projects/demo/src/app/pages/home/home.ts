@@ -21,6 +21,7 @@ export class HomePage {
   private readonly appRef = inject(ApplicationRef);
 
   selectCategory(category: Category | 'all'): void {
+    this.store.activeSlug.set(null);
     this.store.reflowing.set(true);
     this.appRef.tick();
     const { finished } = this.morph.run(() => this.store.setCategory(category));
@@ -37,6 +38,8 @@ export class HomePage {
   }
 
   toggleSave(destination: Destination): void {
+    // Drop the leftover route-morph name from a back navigation so the save name wins.
+    this.store.activeSlug.set(null);
     this.store.flyingSlug.set(destination.slug);
     this.appRef.tick();
     const { finished } = this.morph.run(() => this.store.toggleSaved(destination.slug));

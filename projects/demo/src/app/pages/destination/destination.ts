@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MorphDirective } from 'ngx-view-morph';
 
@@ -10,7 +10,7 @@ import { WayfarerStore } from '../../state/wayfarer.store';
   templateUrl: './destination.html',
   styleUrl: './destination.scss',
 })
-export class DestinationPage {
+export class DestinationPage implements OnDestroy {
   private readonly router = inject(Router);
   private readonly store = inject(WayfarerStore);
 
@@ -24,8 +24,12 @@ export class DestinationPage {
   }
 
   protected back(): void {
-    // The home tile must carry the shared name when it renders, so the photo morphs back.
+    void this.router.navigateByUrl('/');
+  }
+
+  ngOnDestroy(): void {
+    // Runs for every way out (button, browser back, swipe), before the home tile renders.
+    // The name stays set until the next HomePage action clears it.
     this.store.activeSlug.set(this.destination?.slug ?? null);
-    void this.router.navigateByUrl('/').finally(() => this.store.activeSlug.set(null));
   }
 }
