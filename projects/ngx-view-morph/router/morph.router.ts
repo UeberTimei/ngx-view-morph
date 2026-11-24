@@ -3,6 +3,7 @@ import { inject } from '@angular/core';
 import { ViewTransitionsFeature, withViewTransitions } from '@angular/router';
 
 import { morphDirection } from './morph.router.helpers';
+import { animateMorphWindows } from './morph.router.window';
 import { MorphDirection, MorphRouterOptions } from './morph.router.types';
 
 export type { MorphDirection, MorphRouterOptions };
@@ -20,6 +21,8 @@ export function provideMorphRouter(options: MorphRouterOptions = {}): ViewTransi
   return withViewTransitions({
     skipInitialTransition: options.skipInitialTransition ?? true,
     onViewTransitionCreated: ({ transition, from, to }) => {
+      animateMorphWindows(transition);
+      options.onTransition?.(transition);
       if (!options.directionAware) {
         return;
       }

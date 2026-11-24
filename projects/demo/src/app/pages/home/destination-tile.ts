@@ -18,6 +18,7 @@ import { WayfarerStore } from '../../state/wayfarer.store';
             [style.--photo-ratio]="destination().ratio"
             [morph]="routeName()"
             morphClass="morph-cover"
+            morphWindow
           />
         </span>
         <span class="caption">

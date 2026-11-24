@@ -21,6 +21,7 @@ export { MORPH_COVER_CLASS, MORPH_SCOPE_CLASS };
     '[style.view-transition-name]': 'transitionName',
     '[style.view-transition-class]': 'viewTransitionClass',
     '[style.border-radius]': 'coverRadius',
+    '[attr.data-morph-window]': 'windowAttr',
   },
 })
 export class MorphDirective {
@@ -37,6 +38,18 @@ export class MorphDirective {
    * be defined once via `::view-transition-group(.<class>)`.
    */
   @Input() morphClass: string | null = null;
+
+  /**
+   * Marks the host as the whole, uncropped photo that two screens crop differently. With the
+   * router feature `provideMorphRouter`, the transition group is clipped to each screen's frame
+   * (the host's parent), so the photo morphs as one picture instead of two crossfading crops.
+   * Write it as a bare attribute: `<img morph="x" morphWindow />`.
+   */
+  @Input() morphWindow: boolean | '' = false;
+
+  protected get windowAttr(): '' | null {
+    return this.morphWindow === false ? null : '';
+  }
 
   protected get transitionName(): string | null {
     return this.morph === 'auto' ? 'match-element' : this.morph;

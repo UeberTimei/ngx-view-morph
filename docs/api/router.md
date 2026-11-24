@@ -22,6 +22,9 @@ It wraps Angular's `withViewTransitions`.
 | --- | --- | --- | --- |
 | `directionAware` | `boolean` | `false` | Set `data-morph-direction` on `<html>` while a navigation transition runs. |
 | `skipInitialTransition` | `boolean` | `true` | Do not animate the first navigation. |
+| `onTransition` | `(transition: ViewTransition) => void` | none | Called for every route view transition. |
+
+Photos marked with `morphWindow` need no extra setup. `provideMorphRouter` animates their clip automatically. See [Differently cropped photos](/guide/photo-window).
 
 ## `morphDirection(fromUrl, toUrl)`
 

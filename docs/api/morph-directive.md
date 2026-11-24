@@ -16,6 +16,7 @@ import { MorphDirective } from 'ngx-view-morph';
 | --- | --- | --- | --- |
 | `morph` | `string \| null` | `null` | The `view-transition-name`. Use `'auto'` to let the browser name the element (`match-element`, Chrome 137+). `null` removes the name. |
 | `morphClass` | `string \| null` | `null` | Extra `view-transition-class` values, space separated. Use it to style groups of elements. |
+| `morphWindow` | `boolean \| ''` | `false` | Marks a whole photo that is shown with different crops. The transition clips from the old frame (the parent) to the new one. Needs `provideMorphRouter`. A bare attribute enables it. See [Differently cropped photos](/guide/photo-window). |
 
 ## What it sets on the host
 

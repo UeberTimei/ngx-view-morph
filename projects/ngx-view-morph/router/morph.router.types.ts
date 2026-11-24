@@ -10,4 +10,6 @@ export interface MorphRouterOptions {
   directionAware?: boolean;
   /** Skip the view transition on the very first (initial) navigation. */
   skipInitialTransition?: boolean;
+  /** Called for every route view transition, e.g. to toggle a class while it runs. */
+  onTransition?: (transition: ViewTransition) => void;
 }

@@ -21,6 +21,7 @@ export default defineConfig({
           { text: 'Getting started', link: '/guide/getting-started' },
           { text: 'Concepts', link: '/guide/concepts' },
           { text: 'Shared elements', link: '/guide/shared-elements' },
+          { text: 'Differently cropped photos', link: '/guide/photo-window' },
           { text: 'Lists', link: '/guide/lists' },
           { text: 'Page transitions', link: '/guide/page-transitions' },
           { text: 'Styling', link: '/guide/styling' },
