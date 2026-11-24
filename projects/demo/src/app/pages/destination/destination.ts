@@ -29,10 +29,14 @@ export class DestinationPage implements OnDestroy {
   protected readonly leaving = signal(false);
 
   protected back(): void {
-    // Let the overlays fade out before the morph starts (0.3s, matches `.leaving` in the scss).
-    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    void this.router.navigateByUrl('/');
+  }
+
+  /** Fades the overlays out (`.leaving` in the scss) before the exit morph starts. */
+  fadeOut(): Promise<boolean> | true {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
     this.leaving.set(true);
-    setTimeout(() => void this.router.navigateByUrl('/'), reduced ? 0 : 300);
+    return new Promise((resolve) => setTimeout(() => resolve(true), 150));
   }
 
   ngOnDestroy(): void {
