@@ -12,6 +12,21 @@ export function animateCoverWindows({ transition }: ViewTransitionInfo): void {
   document.documentElement.classList.add('vt-active');
   void transition.finished.finally(() => document.documentElement.classList.remove('vt-active'));
   const before = measureWindows();
+  // Static rules apply from the very first frame: a clip set only at `ready` leaves the full
+  // photo box visible until then. A crossfade of two snapshots of one photo shows both mid-flight
+  // when their aspect differs (tall photos), so only the full-width (hero) snapshot is shown.
+  const rules = document.createElement('style');
+  for (const [name, from] of before) {
+    const id = CSS.escape(name);
+    const [keep, drop] = from.hero ? ['old', 'new'] : ['new', 'old'];
+    rules.textContent +=
+      `::view-transition-group(${id}) { clip-path: ${from.clip}; }` +
+      `::view-transition-${keep}(${id}) { animation: none !important; opacity: 1; }` +
+      `::view-transition-${drop}(${id}) { animation: none !important; opacity: 0; }`;
+  }
+  document.head.append(rules);
+  void transition.finished.finally(() => rules.remove());
+
   void transition.ready.then(() => {
     const after = measureWindows();
     const root = document.documentElement;
@@ -26,21 +41,17 @@ export function animateCoverWindows({ transition }: ViewTransitionInfo): void {
       const to = after.get(name);
       if (!to) continue;
       const group = `::view-transition-group(${CSS.escape(name)})`;
-      root.animate({ clipPath: [from.clip, to.clip] }, { duration: ms, easing, fill: 'both', pseudoElement: group });
-      // Crossfading two snapshots of one photo shows both mid-flight when their aspect differs
-      // (tall photos), so show only the larger (hero) snapshot for the whole flight.
-      const keep = from.area >= to.area ? 'old' : 'new';
-      const drop = keep === 'old' ? 'new' : 'old';
-      for (const [side, opacity] of [[keep, 1], [drop, 0]] as const) {
-        root.animate({ opacity: [opacity, opacity] }, { duration: ms, fill: 'both', pseudoElement: `::view-transition-${side}(${CSS.escape(name)})` });
-      }
+      const clip = root.animate({ clipPath: [from.clip, to.clip] }, { duration: ms, easing, fill: 'both', pseudoElement: group });
+      // Start on the same frame as the browser's own group animation so the two never drift apart.
+      const own = document.getAnimations().find((a) => (a.effect as KeyframeEffect | null)?.pseudoElement === group && a !== clip);
+      if (own?.startTime != null) clip.startTime = own.startTime;
     }
   });
 }
 
 interface Window {
   clip: string;
-  area: number;
+  hero: boolean;
 }
 
 /** Maps each named cover photo to the clip-path of its frame, relative to the photo's own box. */
@@ -62,7 +73,7 @@ function measureWindows(): Map<string, Window> {
       .map((fraction) => `${Math.max(0, fraction * 100)}%`)
       .join(' ');
     const radius = getComputedStyle(frame).borderTopLeftRadius;
-    windows.set(name, { clip: `inset(${inset} round ${radius})`, area: photo.width * photo.height });
+    windows.set(name, { clip: `inset(${inset} round ${radius})`, hero: photo.width >= window.innerWidth * 0.9 });
   }
   return windows;
 }
