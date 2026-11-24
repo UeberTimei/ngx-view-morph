@@ -1,4 +1,4 @@
-import { ApplicationRef, Component, inject } from '@angular/core';
+import { afterNextRender, ApplicationRef, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MorphService } from 'ngx-view-morph';
 
@@ -20,6 +20,11 @@ export class HomePage {
   private readonly router = inject(Router);
   private readonly appRef = inject(ApplicationRef);
 
+  constructor() {
+    // Runs after the grid renders, still inside the route transition, so the morph lands on the tile.
+    afterNextRender(() => window.scrollTo({ top: this.store.homeScrollY, behavior: 'instant' }));
+  }
+
   selectCategory(category: Category | 'all'): void {
     this.store.activeSlug.set(null);
     this.store.reflowing.set(true);
@@ -30,6 +35,7 @@ export class HomePage {
   }
 
   open(destination: Destination): void {
+    this.store.homeScrollY = window.scrollY;
     this.store.activeSlug.set(destination.slug);
     this.appRef.tick();
     void this.router

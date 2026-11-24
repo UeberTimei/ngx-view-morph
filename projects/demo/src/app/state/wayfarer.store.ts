@@ -12,6 +12,8 @@ export class WayfarerStore {
 
   /** Slug whose photo carries the route-morph name. */
   readonly activeSlug = signal<string | null>(null);
+  /** Home scroll offset at the moment a card opened, restored when coming back. */
+  homeScrollY = 0;
   /** True while the grid reflows, so tiles carry list-morph names. */
   readonly reflowing = signal(false);
   /** Slug whose photo and tray thumbnail share a name while a save animates. */
