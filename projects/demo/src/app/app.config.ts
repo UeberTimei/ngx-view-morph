@@ -3,11 +3,11 @@ import {
   provideAppInitializer,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
-import { provideRouter, withViewTransitions } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { provideMorph } from 'ngx-view-morph';
+import { provideMorphRouter } from 'ngx-view-morph/router';
 
 import { routes } from './app.routes';
-import { animateCoverWindows } from './morph-window';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,7 +19,15 @@ export const appConfig: ApplicationConfig = {
     provideMorph(),
     provideRouter(
       routes,
-      withViewTransitions({ skipInitialTransition: true, onViewTransitionCreated: animateCoverWindows }),
+      provideMorphRouter({
+        // A backdrop-filter on a named element leaks its glass over the whole transition layer.
+        onTransition: (transition) => {
+          document.documentElement.classList.add('vt-active');
+          void transition.finished.finally(() =>
+            document.documentElement.classList.remove('vt-active'),
+          );
+        },
+      }),
     ),
   ],
 };

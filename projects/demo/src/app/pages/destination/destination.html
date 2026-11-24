@@ -1,7 +1,7 @@
 @if (destination; as d) {
 <article class="page">
   <figure class="stage">
-    <div class="hero" [morph]="'dest-' + d.slug" morphClass="morph-cover" [style.--photo-ratio]="d.ratio">
+    <div class="hero" [morph]="'dest-' + d.slug" morphClass="morph-cover" morphWindow [style.--photo-ratio]="d.ratio">
       <img [src]="d.photo" [alt]="d.title + ', ' + d.place" />
     </div>
     <button class="back" type="button" (click)="back()">
